@@ -39,6 +39,8 @@ def handle_client(conn, addr):
                 send_message(conn, "LIST", user_list.encode('utf-8'))
             elif cmd == "QUIT":
                 break
+            else:
+                send_message(conn, "ERROR", f"Неизвестная команда: {cmd}".encode('utf-8'))
     finally:
         with clients_lock:
             clients.pop(conn, None)
@@ -50,12 +52,12 @@ def handle_client(conn, addr):
 
 def broadcast(command, payload, sender_conn=None):
     with clients_lock:
-        recipient = [conn for conn in clients if conn != sender_conn]
+        recipients = [conn for conn in clients if conn != sender_conn]
 
-    for conn in recipient:
+    for conn in recipients:
         try:
             send_message(conn, command, payload)
-        except Exception:
+        except (ConnectionResetError, BrokenPipeError):
             pass
 
 def run_server(host: str = "0.0.0.0", port: int = 8000):

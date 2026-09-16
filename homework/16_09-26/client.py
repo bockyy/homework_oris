@@ -15,11 +15,11 @@ def receive_messages(sock):
             cmd, payload = msg
 
             if cmd == "TEXT":
-                print(f"\n{payload.decode('utf-8')}")
+                print(f"{payload.decode('utf-8')}")
             elif cmd == "LIST":
-                print(f"\n[Онлайн]: {payload.decode('utf-8')}")
-    except Exception as e:
-        print(f"\n[Ошибка чтения]: {e}")
+                print(f"[Онлайн]: {payload.decode('utf-8')}")
+    except (ConnectionResetError, ConnectionAbortedError):
+        print("[Сбой]: Сервер аварийно разорвал соединение.")
     finally:
         sock.close()
         sys.exit(0)
