@@ -20,6 +20,8 @@ def handle_client(conn, addr):
     with clients_lock:
         clients[conn] = nickname
 
+    print(f"[ПОДКЛЮЧЕНИЕ] Клиент {nickname} ({addr}) вошел в чат.")
+
     broadcast("TEXT", f"{nickname} присоединился к чату".encode('utf-8'), sender_conn=conn)
 
     try:
@@ -44,6 +46,8 @@ def handle_client(conn, addr):
     finally:
         with clients_lock:
             clients.pop(conn, None)
+
+        print(f"[ОТКЛЮЧЕНИЕ] Клиент {nickname} ({addr}) отключился.")
 
         broadcast("TEXT", f"{nickname} покинул чат".encode('utf-8'))
         conn.close()
