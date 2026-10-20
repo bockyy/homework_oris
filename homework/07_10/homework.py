@@ -93,7 +93,6 @@ class TaskManagerApp(QMainWindow):
         filter_layout.addWidget(QLabel("Filter:"))
         self.combo_filter = QComboBox()
         self.combo_filter.addItems(["All", "Low", "Medium", "High"])
-
         self.combo_filter.currentTextChanged.connect(self.render_tasks)
         filter_layout.addWidget(self.combo_filter)
 
@@ -180,5 +179,5 @@ def main():
     sys.exit(app.exec())
 
 if __name__ == "__main__":
-	main()
+    main()
 
