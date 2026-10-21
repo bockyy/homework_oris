@@ -1,6 +1,5 @@
 import sys, os
 import json
-from PyQt6.QtCore import Qt
 from about_dialog import AboutDialog
 from PyQt6.QtWidgets import (
     QApplication,
@@ -9,14 +8,13 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QMainWindow,
     QPushButton,
-    QRadioButton,
     QTextEdit,
     QVBoxLayout,
     QWidget,
     QCheckBox,
     QComboBox,
     QMessageBox,
-    QListWidget, QListWidgetItem
+    QListWidget
 )
 
 class TaskManagerApp(QMainWindow):
@@ -252,6 +250,7 @@ class TaskManagerApp(QMainWindow):
         self.save_to_json()
         self.render_tasks()
         self.task_count_layout.setText(f"Task Count: {len(self.tasks)}")
+        self.clear_form()
 
     def fill_form_for_edit(self, item=None):
         row = self.task_list.currentRow()
